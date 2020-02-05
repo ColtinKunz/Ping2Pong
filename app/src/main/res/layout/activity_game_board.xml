@@ -7,74 +7,72 @@
     android:background="@drawable/ping_pong_table"
     tools:context=".GameBoard">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <!-- <LinearLayout
+       android:id="@+id/linearLayout"
+       android:layout_width="wrap_content"
+       android:layout_height="match_parent"
+       android:orientation="vertical"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
-            android:id="@+id/player2Up"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#000"
-            app:srcCompat="@drawable/arrow_up_black"
-            tools:ignore="VectorDrawableCompat" />
+       <ImageButton
+           android:id="@+id/player2Up"
+           android:layout_width="75dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:background="#000"
+           app:srcCompat="@drawable/arrow_up_black"
+           tools:ignore="VectorDrawableCompat" />
 
-        <ImageButton
-            android:id="@+id/player2Down"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#000"
+       <ImageButton
+           android:id="@+id/player2Down"
+           android:layout_width="75dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:background="#000"
 
-            app:srcCompat="@drawable/arrow_down_black"
-            tools:ignore="VectorDrawableCompat" />
-    </LinearLayout>
+           app:srcCompat="@drawable/arrow_down_black"
+           tools:ignore="VectorDrawableCompat" />
+   </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+ <LinearLayout
+       android:id="@+id/linearLayout2"
+       android:layout_width="wrap_content"
+       android:layout_height="match_parent"
+       android:orientation="vertical"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
-            android:id="@+id/player1Up"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#000"
-            app:srcCompat="@drawable/arrow_up_black"
-            tools:ignore="VectorDrawableCompat" />
+       <ImageButton
+           android:id="@+id/player1Up"
+           android:layout_width="75dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:background="#000"
+           app:srcCompat="@drawable/arrow_up_black"
+           tools:ignore="VectorDrawableCompat" />
 
-        <ImageButton
-            android:id="@+id/player1Down"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#000"
+       <ImageButton
+           android:id="@+id/player1Down"
+           android:layout_width="75dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:background="#000"
 
-            app:srcCompat="@drawable/arrow_down_black"
-            tools:ignore="VectorDrawableCompat" />
-    </LinearLayout>
+           app:srcCompat="@drawable/arrow_down_black"
+           tools:ignore="VectorDrawableCompat" />
+   </LinearLayout>-->
 
     <ImageView
         android:id="@+id/ball"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginStart="260dp"
         android:adjustViewBounds="true"
         android:background="#fff"
-        app:layout_constraintEnd_toStartOf="@+id/linearLayout"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/tennis_ball" />
 
@@ -85,7 +83,6 @@
         android:layout_marginEnd="245dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/linearLayout"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -98,17 +95,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/player2Score"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/linearLayout2"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/player1Bar"
         android:layout_width="wrap_content"
         android:layout_height="170dp"
-        android:layout_marginTop="185dp"
-        android:layout_marginBottom="56dp"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/linearLayout2"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/bar" />
 
@@ -116,10 +111,8 @@
         android:id="@+id/player2Bar"
         android:layout_width="wrap_content"
         android:layout_height="170dp"
-        android:layout_marginTop="185dp"
-        android:layout_marginBottom="56dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/bar" />
 
@@ -135,7 +128,6 @@
         android:textSize="28sp"
         app:layout_constraintBottom_toTopOf="@+id/player2Score"
         app:layout_constraintEnd_toStartOf="@+id/ball"
-        app:layout_constraintStart_toEndOf="@+id/linearLayout2"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
