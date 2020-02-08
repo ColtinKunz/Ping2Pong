@@ -1,4 +1,4 @@
-package com.example.ping2pong;
+package com.ist.pingpong;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,17 +8,19 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ping2pong.R;
+
 public class MainActivity extends AppCompatActivity {
-    int countScore = 0;
-    int countTime = 0;
-    Button startMinus;
-    Button startAdd;
-    Button timeAdd;
-    Button timeMinus;
-    Button exits;
-    Button start;
-    TextView displayScores;
-    TextView displayTime;
+    private  int countScore = 0;
+    private int countTime = 0;
+    private Button startMinus;
+    private Button startAdd;
+    private  Button timeAdd;
+    private Button timeMinus;
+    private Button exits;
+    private Button start;
+    private TextView displayScores;
+    private TextView displayTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -11,8 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".GameBoard" android:screenOrientation="landscape"/>
-        <activity android:name=".MainActivity" android:screenOrientation="landscape">
+        <activity android:name="com.ist.pingpong.GameBoard" />
+        <activity android:name="com.ist.pingpong.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
