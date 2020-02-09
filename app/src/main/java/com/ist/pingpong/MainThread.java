@@ -40,8 +40,8 @@ public class MainThread extends SurfaceView implements Runnable {
     private int tractScorePlayer1 = 0;
     private int tractScorePlayer2 = 0;
     private int tractTime;
-    int generalScore;
-
+   private int generalScore;
+private int winning = 0;
     public MainThread(Context context, int x, int y) {
         super(context);
         screenX = x;
@@ -71,7 +71,6 @@ public class MainThread extends SurfaceView implements Runnable {
             AssetManager assetManager = context.getAssets();
             AssetFileDescriptor descriptor;
 
-            // Load our fx in memory ready for use
             descriptor = assetManager.openFd("beep_one.mp3");
             beep1 = soundPool.load(descriptor, 0);
 
@@ -96,9 +95,7 @@ public class MainThread extends SurfaceView implements Runnable {
             tractScorePlayer1 = 0;
             tractScorePlayer2 = 0;
             tractTime = 0;
-
         }
-
     }
 
     @Override
@@ -121,7 +118,6 @@ public class MainThread extends SurfaceView implements Runnable {
     public void update() {
         bar1.update(trackChangeDirectionOfBall);
         bar2.update(trackChangeDirectionOfBall);
-
         ball.update(trackChangeDirectionOfBall);
         if (RectF.intersects(bar1.getRect(), ball.getRect())) {
             ball.setRandomXVelocity();
@@ -129,7 +125,6 @@ public class MainThread extends SurfaceView implements Runnable {
             ball.clearObstacleY(bar1.getRect().top - 2);
             tractScorePlayer1++;
             ball.increaseVelocity();
-
             soundPool.play(beep1, 1, 1, 0, 0, 1);
         }
         //second bar, the bar at the top
@@ -139,7 +134,6 @@ public class MainThread extends SurfaceView implements Runnable {
             ball.clearObstacleY(bar2.getRect().bottom - 2);
             tractScorePlayer2++;
             ball.increaseVelocity();
-
             soundPool.play(beep1, 1, 1, 0, 0, 1);
         }
         if (ball.getRect().bottom > screenY) {
@@ -184,10 +178,8 @@ public class MainThread extends SurfaceView implements Runnable {
             canvas.drawRect(ball.getRect(), paint);
             paint.setColor(Color.argb(255, 255, 255, 255));
             paint.setTextSize(40);
-
             canvas.drawText("Player 1 Score: " + tractScorePlayer1 + "   Time: " + tractTime, 10, screenY - 20, paint);
             canvas.drawText("Player 2 Score: " + tractScorePlayer2 + "   Time: " + tractTime, 10, 50, paint);
-
             holder.unlockCanvasAndPost(canvas);
 
         }
@@ -260,5 +252,8 @@ public class MainThread extends SurfaceView implements Runnable {
 
     public int getGeneralScore() {
         return generalScore;
+    }
+    private int getWinning(){
+        return winning;
     }
 }
