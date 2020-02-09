@@ -1,26 +1,23 @@
 package com.ist.pingpong;
 
 import android.content.Intent;
-import android.content.res.AssetFileDescriptor;
-import android.content.res.AssetManager;
-import android.media.AudioAttributes;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.SoundPool;
-import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.ping2pong.R;
-import com.google.android.material.snackbar.Snackbar;
 
-import java.io.IOException;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AddPlayer.OnFragmentInteractionListener {
     private  int countScore = 0;
     private int countTime = 0;
     private Button startMinus;
@@ -32,6 +29,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView displayScores;
     private TextView displayTime;
     private MediaPlayer mediaPlayer;
+    private String player1;
+    private String player2;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
         init();
         buttonsPress();
         sound();
-
     }
     private void init(){
         start = findViewById(R.id.start);
@@ -94,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, GameBoard.class);
         intent.putExtra("countScore", countScore);
         intent.putExtra("countTime", countTime);
+        intent.putExtra("p1", player1);
+        intent.putExtra("p2", player2);
         if (mediaPlayer.isPlaying()){
             mediaPlayer.stop();
         }
@@ -113,4 +115,40 @@ public class MainActivity extends AppCompatActivity {
           }
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item1:
+                openFrag("s", "s");
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void openFrag(String s1, String s2) {
+        start.setVisibility(View.GONE);
+        AddPlayer addPlayer = AddPlayer.newInstance(s1, s2);
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.addToBackStack(null);
+        transaction.add(R.id.fragment, addPlayer, "addPlayer").commit();
+
+    }
+
+    @Override
+    public void onFragmentInteraction(String s1, String s2) {
+        player1 = s1;
+        player2 = s2;
+        onBackPressed();
+        start.setVisibility(View.VISIBLE);
+    }
+
 }

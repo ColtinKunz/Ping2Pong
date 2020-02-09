@@ -212,4 +212,12 @@
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <FrameLayout
+        android:layout_width="282dp"
+        android:layout_height="167dp"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="1dp">
+
+    </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

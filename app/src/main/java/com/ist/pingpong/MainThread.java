@@ -40,8 +40,11 @@ public class MainThread extends SurfaceView implements Runnable {
     private int tractScorePlayer1 = 0;
     private int tractScorePlayer2 = 0;
     private int tractTime;
-   private int generalScore;
-private int winning = 0;
+    private int generalScore;
+    private int winning = 0;
+    private String player1;
+    private String player2;
+
     public MainThread(Context context, int x, int y) {
         super(context);
         screenX = x;
@@ -178,8 +181,8 @@ private int winning = 0;
             canvas.drawRect(ball.getRect(), paint);
             paint.setColor(Color.argb(255, 255, 255, 255));
             paint.setTextSize(40);
-            canvas.drawText("Player 1 Score: " + tractScorePlayer1 + "   Time: " + tractTime, 10, screenY - 20, paint);
-            canvas.drawText("Player 2 Score: " + tractScorePlayer2 + "   Time: " + tractTime, 10, 50, paint);
+            canvas.drawText(player1 + " Score: " + tractScorePlayer1 + "   Time: " + tractTime, 10, screenY - 20, paint);
+            canvas.drawText(player2 + " Score: " + tractScorePlayer2 + "   Time: " + tractTime, 10, 50, paint);
             holder.unlockCanvasAndPost(canvas);
 
         }
@@ -253,7 +256,12 @@ private int winning = 0;
     public int getGeneralScore() {
         return generalScore;
     }
-    private int getWinning(){
-        return winning;
+
+    public void setPlayer1(String player1) {
+        this.player1 = player1;
+    }
+
+    public void setPlayer2(String player2) {
+        this.player2 = player2;
     }
 }

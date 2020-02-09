@@ -1,17 +1,13 @@
 package com.ist.pingpong;
 
 import android.app.Activity;
-import android.graphics.ImageFormat;
 import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.ping2pong.R;
 import com.google.android.material.snackbar.Snackbar;
@@ -28,7 +24,9 @@ private  MediaPlayer mediaPlayer;
         Bundle extra = getIntent().getExtras();
         int countScore = extra.getInt("countScore", 10);
         int countTime = extra.getInt("countTime", 5);
-
+        String player1 = extra.getString("p1");
+        String player2 = extra.getString("p2");
+        System.out.println("p1111111111111" + player1);
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -36,6 +34,8 @@ private  MediaPlayer mediaPlayer;
         mainThread = new MainThread(this, size.x, size.y);
         mainThread.setTractScore(countScore);
         mainThread.setTractTime(countTime);
+        mainThread.setPlayer1(player1);
+        mainThread.setPlayer2(player2);
         setContentView(mainThread);
         alert(countTime);
     }
