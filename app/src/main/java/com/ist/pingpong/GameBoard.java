@@ -86,7 +86,7 @@ private  MediaPlayer mediaPlayer;
 
     }
     private void sound(){
-        mediaPlayer = MediaPlayer.create(this, R.raw.rock);
+        mediaPlayer = MediaPlayer.create(this, R.raw.sound);
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.pause();
 

@@ -17,14 +17,12 @@ public class Bar {
     private int screenY;
 
     public Bar(int x, int y){
-
         screenX = x;
         screenY = y;
         barLength = screenX / 8;
         barHeight = screenY / 25;
         xCoord = screenX / 2;
         yCoord = screenY - 20;
-
         rectangle = new RectF(xCoord, yCoord, xCoord + barLength, yCoord + barHeight);
         batSpeed = screenX;
     }
@@ -39,13 +37,14 @@ public class Bar {
         if(batMoving == LEFT){
             xCoord = xCoord - batSpeed / fps;
         }
-
         if(batMoving == RIGHT){ xCoord = xCoord + batSpeed / fps;
         }
-        if(rectangle.left < 0){ xCoord = 0; } if(rectangle.right > screenX){
+        if (rectangle.left < 0) {
+            xCoord = 0;
+        }
+        if (rectangle.right > screenX) {
             xCoord = screenX -(rectangle.right - rectangle.left);
         }
-
         rectangle.left = xCoord;
         rectangle.right = xCoord + barLength;
     }
