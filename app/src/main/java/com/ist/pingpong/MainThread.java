@@ -183,6 +183,8 @@ public class MainThread extends SurfaceView implements Runnable {
             paint.setTextSize(40);
             canvas.drawText(player1 + " Score: " + tractScorePlayer1 + "   Time: " + tractTime, 10, screenY - 20, paint);
             canvas.drawText(player2 + " Score: " + tractScorePlayer2 + "   Time: " + tractTime, 10, 50, paint);
+            canvas.drawText("---------------------------------------------------------------------------------------------------- ",
+                    0, screenY / 2, paint);
             holder.unlockCanvasAndPost(canvas);
 
         }
@@ -240,7 +242,7 @@ public class MainThread extends SurfaceView implements Runnable {
                 break;
             case MotionEvent.ACTION_UP:
                 bar1.setMovementState(bar1.STOPPED);
-                bar2.setMovementState(bar2.STOPPED);
+                //bar2.setMovementState(bar2.STOPPED);
         }
         return true;
     }

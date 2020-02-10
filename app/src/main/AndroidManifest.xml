@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name="com.ist.pingpong.GameBoard" />
-        <activity android:name="com.ist.pingpong.MainActivity" >
+        <activity android:name="com.ist.pingpong.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
