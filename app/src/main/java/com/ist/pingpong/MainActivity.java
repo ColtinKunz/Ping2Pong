@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements AddPlayer.OnFragm
         System.exit(0);
     }
     public void sound(){
-        mediaPlayer = MediaPlayer.create(this, R.raw.oboy);
+        mediaPlayer = MediaPlayer.create(this, R.raw.sound);
           if (!mediaPlayer.isPlaying()){
               mediaPlayer.start();
           }
