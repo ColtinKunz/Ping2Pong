@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@drawable/first_page_background"
+        android:duration="5000" />
+    <item
+        android:drawable="@drawable/first_page_background_01"
+        android:duration="5000" />
+    <item
+        android:drawable="@drawable/first_page_background_02"
+        android:duration="5000" />
+    <item
+        android:drawable="@drawable/first_page_background_03"
+        android:duration="5000" />
+    <item
+        android:drawable="@drawable/first_page_background_04"
+        android:duration="5000" />
+    <item
+        android:drawable="@drawable/first_page_background_06"
+        android:duration="5000" />
+    <item
+        android:drawable="@drawable/first_page_background_07"
+        android:duration="5000" />
+</animation-list>

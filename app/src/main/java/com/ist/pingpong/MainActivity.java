@@ -1,6 +1,7 @@
 package com.ist.pingpong;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements AddPlayer.OnFragm
     private MediaPlayer mediaPlayer;
     private String player1;
     private String player2;
+    private ImageView background;
 
 
     @Override
@@ -40,7 +43,18 @@ public class MainActivity extends AppCompatActivity implements AddPlayer.OnFragm
         init();
         buttonsPress();
         sound();
+
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        ImageView rocketImage = findViewById(R.id.background);
+        rocketImage.setImageResource(R.drawable.animate_background);
+        AnimationDrawable rocketAnimation = (AnimationDrawable) rocketImage.getDrawable();
+        rocketAnimation.start();
+    }
+
     private void init(){
         start = findViewById(R.id.start);
         startMinus = findViewById(R.id.startMinus);
@@ -50,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements AddPlayer.OnFragm
         exits = findViewById(R.id.exits);
         displayScores = findViewById(R.id.displayScores);
         displayTime = findViewById(R.id.displayTime);
+
+
     }
     private void buttonsPress(){
         startMinus.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements AddPlayer.OnFragm
                     countScore++;
                 }
                 displayScores.setText(countScore +"");
+
             }
         });
         timeMinus.setOnClickListener(new View.OnClickListener() {
