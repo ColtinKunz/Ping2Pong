@@ -135,7 +135,6 @@ public class MainThread extends SurfaceView implements Runnable {
             ball.setRandomXVelocity();
             ball.reverseYVelocity();
             ball.clearObstacleY(bar2.getRect().bottom - 2);
-            tractScorePlayer2++;
             ball.increaseVelocity();
             soundPool.play(beep1, 1, 1, 0, 0, 1);
         }
@@ -143,8 +142,8 @@ public class MainThread extends SurfaceView implements Runnable {
             ball.reverseYVelocity();
             ball.clearObstacleY(screenY - 2);
             tractTime--;
+            tractScorePlayer2++;
             soundPool.play(looseLife, 1, 1, 0, 0, 1);
-
             if (tractTime < 1 || tractScorePlayer1 == getGeneralScore() || tractScorePlayer2 == getGeneralScore()) {
                 isPaused = true;
                 setupAndRestart();
@@ -153,25 +152,22 @@ public class MainThread extends SurfaceView implements Runnable {
         if (ball.getRect().top < 0) {
             ball.reverseYVelocity();
             ball.clearObstacleY(12);
-
             soundPool.play(beep2, 1, 20, 0, 0, 1);
         }
         if (ball.getRect().left < 0) {
             ball.reverseXVelocity();
             ball.clearObstacleX(2);
-
             soundPool.play(beep3, 1, 1, 0, 0, 1);
         }
         if (ball.getRect().right > screenX) {
             ball.reverseXVelocity();
             ball.clearObstacleX(screenX - 22);
-
             soundPool.play(beep3, 1, 1, 0, 0, 1);
+
         }
+
     }
-
     public void draw() {
-
         if (holder.getSurface().isValid()) {
             canvas = holder.lockCanvas();
             canvas.drawColor(Color.argb(255, 0, 0, 0));
@@ -219,12 +215,11 @@ public class MainThread extends SurfaceView implements Runnable {
 
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent) {
-
         switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
                 isPaused = false;
                 if (motionEvent.getX() > screenX / 2) {
-                    if (motionEvent.getRawY() < 500) {
+                    if (motionEvent.getRawY() >= 0 && motionEvent.getRawY() < 500) {
                         bar2.setMovementState(bar2.RIGHT);
                     } else {
                         bar1.setMovementState(bar1.RIGHT);
@@ -242,7 +237,7 @@ public class MainThread extends SurfaceView implements Runnable {
                 break;
             case MotionEvent.ACTION_UP:
                 bar1.setMovementState(bar1.STOPPED);
-                //bar2.setMovementState(bar2.STOPPED);
+                bar2.setMovementState(bar2.STOPPED);
         }
         return true;
     }

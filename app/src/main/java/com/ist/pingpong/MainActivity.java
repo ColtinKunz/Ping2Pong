@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements AddPlayer.OnFragm
     private MediaPlayer mediaPlayer;
     private String player1;
     private String player2;
-    private ImageView background;
 
 
     @Override
