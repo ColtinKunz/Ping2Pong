@@ -50,11 +50,14 @@ public class MainThread extends SurfaceView implements Runnable {
     private boolean isRunning;
     private long timeLeft;
     private String time = "";
+    private String winningMessage = "Congratulations";
+    public boolean gameOver;
 
     public MainThread(Context context, int x, int y) {
         super(context);
         screenX = x;
         screenY = y;
+        gameOver = false;
         System.out.println("tracking time");
         System.out.println(tractTime);
         holder = getHolder();
@@ -102,10 +105,23 @@ public class MainThread extends SurfaceView implements Runnable {
 
     public void setupAndRestart() {
         ball.reset(screenX, screenY);
-        tractScorePlayer1 = 0;
-            tractScorePlayer2 = 0;
-            tractTime = 0;
+        if (tractScorePlayer1 == generalScore){
+            endGame(player1);
+        } else if (tractScorePlayer2 == generalScore){
+            endGame(player2);
+        } else {
+            endGame("Someone");
+        }
     }
+
+    public void endGame(String winner){
+        tractScorePlayer1 = 0;
+        tractScorePlayer2 = 0;
+        tractTime = 0;
+        gameOver = true;
+        winningMessage +=  winner + ", you win!";
+    }
+
     @Override
     public void run() {
 
@@ -157,7 +173,6 @@ public class MainThread extends SurfaceView implements Runnable {
             isPaused = true;
             setupAndRestart();
             soundPool.play(beep2, 1, 20, 0, 0, 1);
-            tractScorePlayer1++;
         }
         if (ball.getRect().left < 0) {
             ball.reverseXVelocity();
@@ -291,5 +306,10 @@ public class MainThread extends SurfaceView implements Runnable {
         int second = (int) (timeLeft / 1000) % 60;
         String timeLeftFormated = String.format(Locale.getDefault(), "%02d:%02d", minute, second);
         time = timeLeftFormated;
+    }
+
+    public String getWinningMessage() {
+        System.out.println(winningMessage);
+        return winningMessage;
     }
 }

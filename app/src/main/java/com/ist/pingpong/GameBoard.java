@@ -1,6 +1,7 @@
 package com.ist.pingpong;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ private  MediaPlayer mediaPlayer;
   private   MainThread mainThread;
   private   int count = 0;
     private int countTime;
+    private String winningMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,7 @@ private  MediaPlayer mediaPlayer;
         countTime = extra.getInt("countTime", 5);
         String player1 = extra.getString("p1");
         String player2 = extra.getString("p2");
+
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -40,6 +43,9 @@ private  MediaPlayer mediaPlayer;
         alert(countTime);
         Toast.makeText(this, countTime + "", Toast.LENGTH_SHORT).show();
         mainThread.startTime(countTime * 60000);
+        if (winningMessage == null){
+            winningMessage = mainThread.getWinningMessage();
+        }
     }
     @Override
     protected void onResume() {
@@ -54,9 +60,10 @@ private  MediaPlayer mediaPlayer;
     @Override
     protected void onPause() {
         super.onPause();
-
         mainThread.pause();
-
+        if (mainThread.gameOver){
+            sendMessage();
+        }
     }
 
 
@@ -100,6 +107,11 @@ private  MediaPlayer mediaPlayer;
                     .show();
 
         }
+    }
+    public void sendMessage(){
+        Intent intent = new Intent(this, WinScreen.class );
+        intent.putExtra("msg", winningMessage );
+        startActivity(intent);
     }
 
 }
