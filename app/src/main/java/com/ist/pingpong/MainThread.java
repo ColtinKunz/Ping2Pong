@@ -12,12 +12,14 @@ import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import java.io.IOException;
+import java.util.Locale;
 
 public class MainThread extends SurfaceView implements Runnable {
     private Thread mGameThread = null;
@@ -39,16 +41,22 @@ public class MainThread extends SurfaceView implements Runnable {
     private int looseLife = -1;
     private int tractScorePlayer1 = 0;
     private int tractScorePlayer2 = 0;
-    private int tractTime;
+    private long tractTime;
     private int generalScore;
     private int winning = 0;
-    private String player1;
-    private String player2;
+    private String player1 = "player1";
+    private String player2 = "player2";
+    private CountDownTimer countDownTimer;
+    private boolean isRunning;
+    private long timeLeft;
+    private String time = "";
 
     public MainThread(Context context, int x, int y) {
         super(context);
         screenX = x;
         screenY = y;
+        System.out.println("tracking time");
+        System.out.println(tractTime);
         holder = getHolder();
         paint = new Paint();
         bar1 = new Bar(screenX, screenY);
@@ -94,15 +102,13 @@ public class MainThread extends SurfaceView implements Runnable {
 
     public void setupAndRestart() {
         ball.reset(screenX, screenY);
-        if (tractTime == 0 || tractScorePlayer1 == getGeneralScore() || tractScorePlayer2 == getGeneralScore()) {
-            tractScorePlayer1 = 0;
+        tractScorePlayer1 = 0;
             tractScorePlayer2 = 0;
             tractTime = 0;
-        }
     }
-
     @Override
     public void run() {
+
         while (isPlaying) {
             long startFrameTime = System.currentTimeMillis();
             if (!isPaused) {
@@ -113,8 +119,8 @@ public class MainThread extends SurfaceView implements Runnable {
             if (timeThisFrame >= 1) {
                 trackChangeDirectionOfBall = 1000 / timeThisFrame;
             }
-
         }
+
 
     }
 
@@ -136,6 +142,7 @@ public class MainThread extends SurfaceView implements Runnable {
             ball.clearObstacleY(bar2.getRect().bottom - 2);
             ball.increaseVelocity();
             soundPool.play(beep1, 1, 1, 0, 0, 1);
+
         }
         if (ball.getRect().bottom > screenY) {
             ball.clearObstacleY(screenY - 2);
@@ -150,11 +157,13 @@ public class MainThread extends SurfaceView implements Runnable {
             isPaused = true;
             setupAndRestart();
             soundPool.play(beep2, 1, 20, 0, 0, 1);
+            tractScorePlayer1++;
         }
         if (ball.getRect().left < 0) {
             ball.reverseXVelocity();
             ball.clearObstacleX(2);
             soundPool.play(beep3, 1, 1, 0, 0, 1);
+
         }
         if (ball.getRect().right > screenX) {
             ball.reverseXVelocity();
@@ -162,7 +171,9 @@ public class MainThread extends SurfaceView implements Runnable {
             soundPool.play(beep3, 1, 1, 0, 0, 1);
         }
 
+
     }
+
     public void draw() {
         if (holder.getSurface().isValid()) {
             canvas = holder.lockCanvas();
@@ -173,8 +184,8 @@ public class MainThread extends SurfaceView implements Runnable {
             canvas.drawRect(ball.getRect(), paint);
             paint.setColor(Color.argb(255, 255, 255, 255));
             paint.setTextSize(40);
-            canvas.drawText(player1 + " Score: " + tractScorePlayer1 + "   Time: " + tractTime, 10, screenY - 20, paint);
-            canvas.drawText(player2 + " Score: " + tractScorePlayer2 + "   Time: " + tractTime, 10, 50, paint);
+            canvas.drawText(player1 + " Score: " + tractScorePlayer1 + "   Time: " + time, 10, screenY - 20, paint);
+            canvas.drawText(player2 + " Score: " + tractScorePlayer2 + "   Time: " + time, 10, 50, paint);
             canvas.drawText("---------------------------------------------------------------------------------------------------- ",
                     0, screenY / 2, paint);
             holder.unlockCanvasAndPost(canvas);
@@ -221,7 +232,6 @@ public class MainThread extends SurfaceView implements Runnable {
                     } else {
                         bar1.setMovementState(bar1.RIGHT);
                     }
-
                 } else {
                     if (motionEvent.getRawY() > 875) {
                         bar1.setMovementState(bar1.LEFT);
@@ -235,6 +245,7 @@ public class MainThread extends SurfaceView implements Runnable {
             case MotionEvent.ACTION_UP:
                 bar1.setMovementState(bar1.STOPPED);
                 bar2.setMovementState(bar2.STOPPED);
+
         }
         return true;
     }
@@ -243,19 +254,42 @@ public class MainThread extends SurfaceView implements Runnable {
         generalScore = tractScorePlayer1;
     }
 
-    public void setTractTime(int tractTime) {
-        this.tractTime = tractTime;
-    }
-
     public int getGeneralScore() {
         return generalScore;
     }
 
     public void setPlayer1(String player1) {
-        this.player1 = player1;
+        if (player1 != null)
+            this.player1 = player1;
     }
 
     public void setPlayer2(String player2) {
-        this.player2 = player2;
+        if (player2 != null)
+            this.player2 = player2;
+    }
+
+    public void startTime(long tractTime) {
+        countDownTimer = new CountDownTimer(tractTime, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeLeft = millisUntilFinished;
+                updateTiME();
+            }
+
+            @Override
+            public void onFinish() {
+                isPaused = true;
+                setupAndRestart();
+            }
+        }.start();
+        isRunning = true;
+
+    }
+
+    private void updateTiME() {
+        int minute = (int) (timeLeft / 1000) / 60;
+        int second = (int) (timeLeft / 1000) % 60;
+        String timeLeftFormated = String.format(Locale.getDefault(), "%02d:%02d", minute, second);
+        time = timeLeftFormated;
     }
 }
