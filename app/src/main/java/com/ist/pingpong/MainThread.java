@@ -42,7 +42,7 @@ public class MainThread extends SurfaceView implements Runnable {
     private int tractScorePlayer1 = 0;
     private int tractScorePlayer2 = 0;
     private long tractTime;
-    //private int generalScore;
+    private int generalScore;
     private int winning = 0;
     private String player1 = "player1";
     private String player2 = "player2";
@@ -101,10 +101,6 @@ public class MainThread extends SurfaceView implements Runnable {
 
     public void setupAndRestart() {
         ball.reset(screenX, screenY);
-        tractScorePlayer1 = 0;
-        tractScorePlayer2 = 0;
-        tractTime = 0;
-
     }
 
     @Override
@@ -132,7 +128,6 @@ public class MainThread extends SurfaceView implements Runnable {
             ball.setRandomXVelocity();
             ball.reverseYVelocity();
             ball.clearObstacleY(bar1.getRect().top - 2);
-            tractScorePlayer1++;
             ball.increaseVelocity();
             soundPool.play(beep1, 1, 1, 0, 0, 1);
         }
@@ -155,10 +150,11 @@ public class MainThread extends SurfaceView implements Runnable {
         if (ball.getRect().top < 0) {
             ball.reverseYVelocity();
             ball.clearObstacleY(12);
-            soundPool.play(beep2, 1, 20, 0, 0, 1);
             tractScorePlayer1++;
             isPaused = true;
             setupAndRestart();
+            soundPool.play(beep2, 1, 20, 0, 0, 1);
+
         }
         if (ball.getRect().left < 0) {
             ball.reverseXVelocity();
@@ -251,9 +247,9 @@ public class MainThread extends SurfaceView implements Runnable {
         return true;
     }
 
-    /*public void setTractScore(int tractScorePlayer1) {
+    public void setTractScore(int tractScorePlayer1) {
         generalScore = tractScorePlayer1;
-    }*/
+    }
 
     public void setPlayer1(String player1) {
         if (player1 != null)
@@ -271,6 +267,7 @@ public class MainThread extends SurfaceView implements Runnable {
             public void onTick(long millisUntilFinished) {
                 timeLeft = millisUntilFinished;
                 updateTime();
+
             }
 
             @Override
@@ -285,7 +282,8 @@ public class MainThread extends SurfaceView implements Runnable {
 
                 isPaused = true;
                 setupAndRestart();
-
+                tractScorePlayer1 = 0;
+                tractScorePlayer2 = 0;
             }
         }.start();
         isRunning = true;

@@ -114,6 +114,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Scores"
+                android:visibility="invisible"
                 android:textColor="#000"
                 android:textSize="30sp" />
         </LinearLayout>
@@ -133,6 +134,7 @@
                 android:background="#80FFFFFF"
                 android:text="-"
                 android:textColor="#000"
+                android:visibility="invisible"
                 android:textSize="36sp" />
 
             <TextView
@@ -141,6 +143,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="50dp"
                 android:text="0"
+                android:visibility="invisible"
                 android:textAlignment="center"
                 android:textColor="#000"
                 android:textSize="36sp" />
@@ -152,6 +155,7 @@
                 android:layout_gravity="right"
                 android:background="#80FFFFFF"
                 android:text="+"
+                android:visibility="invisible"
                 android:textColor="#000"
                 android:textSize="36sp" />
         </LinearLayout>

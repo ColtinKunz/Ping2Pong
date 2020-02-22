@@ -38,14 +38,12 @@ private  MediaPlayer mediaPlayer;
         Point size = new Point();
         display.getSize(size);
         mainThread = new MainThread(this, size.x, size.y);
-        // mainThread.setTractScore(countScore);
         mainThread.setPlayer1(player1);
         mainThread.setPlayer2(player2);
         setContentView(mainThread);
         alert(countTime);
         mainThread.startTime(countTime * 60000);
         checkGameStatus(countTime * 60000);
-
 
     }
     @Override
