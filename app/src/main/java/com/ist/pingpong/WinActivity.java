@@ -3,6 +3,7 @@ package com.ist.pingpong;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +11,7 @@ import com.example.ping2pong.R;
 
 public class WinActivity extends AppCompatActivity {
     private MediaPlayer mediaPlayer;
+    private int count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +22,7 @@ public class WinActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.winMsg);
         textView.setText(msg);
         sound();
+        stopSound();
     }
 
     public void sound() {
@@ -33,8 +36,28 @@ public class WinActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (mediaPlayer.isPlaying()) {
+        Toast.makeText(this, "Back is press", Toast.LENGTH_LONG).show();
             mediaPlayer.stop();
-        }
+    }
+
+    private void stopSound() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Thread.sleep(1000);
+                        if (count == 12) {
+                            mediaPlayer.stop();
+                            break;
+                        }
+                        count++;
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
     }
 }
