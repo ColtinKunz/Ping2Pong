@@ -43,8 +43,8 @@ private  MediaPlayer mediaPlayer;
         mainThread.setPlayer2(player2);
         setContentView(mainThread);
         alert(countTime);
-        mainThread.startTime(countTime * 5000);
-        checkGameStatus(countTime * 5000);
+        mainThread.startTime(countTime * 60000);
+        checkGameStatus(countTime * 60000);
 
 
     }
