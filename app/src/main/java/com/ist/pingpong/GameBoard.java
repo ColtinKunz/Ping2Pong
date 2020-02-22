@@ -1,14 +1,15 @@
 package com.ist.pingpong;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.example.ping2pong.R;
 import com.google.android.material.snackbar.Snackbar;
@@ -18,6 +19,10 @@ private  MediaPlayer mediaPlayer;
   private   MainThread mainThread;
   private   int count = 0;
     private int countTime;
+    private String checking;
+    private CountDownTimer countDownTimer;
+    private boolean isRunning;
+    private long timeLeft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +38,15 @@ private  MediaPlayer mediaPlayer;
         Point size = new Point();
         display.getSize(size);
         mainThread = new MainThread(this, size.x, size.y);
-        mainThread.setTractScore(countScore);
+        // mainThread.setTractScore(countScore);
         mainThread.setPlayer1(player1);
         mainThread.setPlayer2(player2);
         setContentView(mainThread);
         alert(countTime);
-        Toast.makeText(this, countTime + "", Toast.LENGTH_SHORT).show();
-        mainThread.startTime(countTime * 60000);
+        mainThread.startTime(countTime * 5000);
+        checkGameStatus(countTime * 5000);
+
+
     }
     @Override
     protected void onResume() {
@@ -54,9 +61,7 @@ private  MediaPlayer mediaPlayer;
     @Override
     protected void onPause() {
         super.onPause();
-
         mainThread.pause();
-
     }
 
 
@@ -100,6 +105,24 @@ private  MediaPlayer mediaPlayer;
                     .show();
 
         }
+    }
+
+    private void checkGameStatus(long tractTime) {
+        countDownTimer = new CountDownTimer(tractTime, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeLeft = millisUntilFinished;
+            }
+
+            @Override
+            public void onFinish() {
+                Intent intent = new Intent(GameBoard.this, WinActivity.class);
+                intent.putExtra("msg", mainThread.msg());
+                startActivity(intent);
+            }
+        }.start();
+        isRunning = true;
+
     }
 
 }

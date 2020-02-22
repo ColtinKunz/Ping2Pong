@@ -42,7 +42,7 @@ public class MainThread extends SurfaceView implements Runnable {
     private int tractScorePlayer1 = 0;
     private int tractScorePlayer2 = 0;
     private long tractTime;
-    private int generalScore;
+    //private int generalScore;
     private int winning = 0;
     private String player1 = "player1";
     private String player2 = "player2";
@@ -50,13 +50,12 @@ public class MainThread extends SurfaceView implements Runnable {
     private boolean isRunning;
     private long timeLeft;
     private String time = "";
+    private String msg;
 
     public MainThread(Context context, int x, int y) {
         super(context);
         screenX = x;
         screenY = y;
-        System.out.println("tracking time");
-        System.out.println(tractTime);
         holder = getHolder();
         paint = new Paint();
         bar1 = new Bar(screenX, screenY);
@@ -103,12 +102,13 @@ public class MainThread extends SurfaceView implements Runnable {
     public void setupAndRestart() {
         ball.reset(screenX, screenY);
         tractScorePlayer1 = 0;
-            tractScorePlayer2 = 0;
-            tractTime = 0;
+        tractScorePlayer2 = 0;
+        tractTime = 0;
+
     }
+
     @Override
     public void run() {
-
         while (isPlaying) {
             long startFrameTime = System.currentTimeMillis();
             if (!isPaused) {
@@ -143,12 +143,13 @@ public class MainThread extends SurfaceView implements Runnable {
             ball.clearObstacleY(bar2.getRect().bottom - 2);
             ball.increaseVelocity();
             soundPool.play(beep1, 1, 1, 0, 0, 1);
-
         }
         if (ball.getRect().bottom > screenY) {
             ball.reverseYVelocity();
             ball.clearObstacleY(screenY - 2);
             tractScorePlayer2++;
+            isPaused = true;
+            setupAndRestart();
             soundPool.play(looseLife, 1, 1, 0, 0, 1);
         }
         if (ball.getRect().top < 0) {
@@ -156,6 +157,8 @@ public class MainThread extends SurfaceView implements Runnable {
             ball.clearObstacleY(12);
             soundPool.play(beep2, 1, 20, 0, 0, 1);
             tractScorePlayer1++;
+            isPaused = true;
+            setupAndRestart();
         }
         if (ball.getRect().left < 0) {
             ball.reverseXVelocity();
@@ -248,13 +251,9 @@ public class MainThread extends SurfaceView implements Runnable {
         return true;
     }
 
-    public void setTractScore(int tractScorePlayer1) {
+    /*public void setTractScore(int tractScorePlayer1) {
         generalScore = tractScorePlayer1;
-    }
-
-    public int getGeneralScore() {
-        return generalScore;
-    }
+    }*/
 
     public void setPlayer1(String player1) {
         if (player1 != null)
@@ -271,23 +270,39 @@ public class MainThread extends SurfaceView implements Runnable {
             @Override
             public void onTick(long millisUntilFinished) {
                 timeLeft = millisUntilFinished;
-                updateTiME();
+                updateTime();
             }
 
             @Override
             public void onFinish() {
+                if (tractScorePlayer1 > tractScorePlayer2) {
+                    msg = "Congratulation " + player1 + " is the Winner";
+                } else if (tractScorePlayer2 > tractScorePlayer1) {
+                    msg = "Congratulation " + player2 + " is the Winner";
+                } else {
+                    msg = "Is a Tie ";
+                }
+
                 isPaused = true;
                 setupAndRestart();
+
             }
         }.start();
         isRunning = true;
 
     }
 
-    private void updateTiME() {
+    private void updateTime() {
         int minute = (int) (timeLeft / 1000) / 60;
         int second = (int) (timeLeft / 1000) % 60;
         String timeLeftFormated = String.format(Locale.getDefault(), "%02d:%02d", minute, second);
         time = timeLeftFormated;
     }
+
+
+    public String msg() {
+        return msg;
+    }
+
+
 }
