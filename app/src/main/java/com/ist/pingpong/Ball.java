@@ -8,6 +8,7 @@ public class Ball {
     private RectF rectangle;
     private float xSpeed;
     private float ySpeed;
+    private float baseSpeed;
     private float BallWidth;
     private float BallHeight;
     public Ball(int screenX, int screenY){
@@ -17,6 +18,7 @@ public class Ball {
 
         ySpeed = screenY / 4;
         xSpeed = ySpeed;
+        baseSpeed = xSpeed;
 
         rectangle = new RectF();
 
@@ -44,8 +46,8 @@ public class Ball {
         }
     }
     public void increaseVelocity(){
-        xSpeed = xSpeed + xSpeed / 10;
-        ySpeed = ySpeed + ySpeed / 10;
+        xSpeed = xSpeed + xSpeed/10;
+        ySpeed = ySpeed + ySpeed/10;
     }
     public void clearObstacleY(float y){
         rectangle.bottom = y;
@@ -61,6 +63,14 @@ public class Ball {
         rectangle.top = y - 20;
         rectangle.right = x / 2 + BallWidth;
         rectangle.bottom = y - 20 - BallHeight;
+
+        //resets speed
+        if (xSpeed != baseSpeed){
+            xSpeed = baseSpeed;
+            ySpeed = baseSpeed;
+        }
+        if (ySpeed > 0){reverseYVelocity();}
+
     }
 
 }

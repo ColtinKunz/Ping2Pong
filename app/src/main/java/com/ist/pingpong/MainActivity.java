@@ -63,14 +63,12 @@ public class MainActivity extends AppCompatActivity implements AddPlayer.OnFragm
         exits = findViewById(R.id.exits);
         displayScores = findViewById(R.id.displayScores);
         displayTime = findViewById(R.id.displayTime);
-
-
     }
     private void buttonsPress(){
         startMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (countScore > 1){
+                if (countScore >= 1){
                     countScore--;
                 }
                 displayScores.setText(countScore + "");
@@ -89,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements AddPlayer.OnFragm
         timeMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (countTime > 1){
+                if (countTime >= 1){
                     countTime--;
                 }
                 displayTime.setText(countTime + "");
